@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html ng-app="ShoppingListPageApp">
+
+<head>
+  <title>List</title>
+  <script src="/scripts/angular.js"></script>
+  <script src="/Scripts/timer.js"></script>
+  <script src="/areas/Shared/Models/ShoppingItemAJAX.js"></script>
+  <script src="/areas/Shared/Models/ShoppingItem.js"></script>
+  <script src="/areas/Shared/Models/ShoppingItemList.js"></script>
+  <script src="/areas/ShoppingEventPage/ShoppingEventPageApp.js"></script>
+</head>
+
+<body ng-controller="ShoppingListPageController">
+
+  <div>
+    <h3> </h3>
+  </div>
+
+  <div>
+    <input ng-model="newItemName" ng-keypress="newItemKeyPress($event)" placeholder="What do you need?" />
+    <button ng-click="newitemButtonClick()">Add</button>
+  </div>
+
+  <div>
+    <h3> </h3>
+  </div>
+
+  <div>
+    <ul class="list-unstyled">
+      <li ng-repeat="shoppingItem in shoppingItemList">
+        <input type="checkbox" ng-model="shoppingItem.isPurchased" ng-click="shoppingItemCheckboxClick(shoppingItem)" />
+        <input ng-model="shoppingItem.name" ng-disabled="shoppingItemDisabled(shoppingItem)" />
+        <a href="#" ng-click="shoppingItemDeleteClicked(shoppingItem)">[X]</a>
+      </li>
+    </ul>
+  </div>
+
+@*<refreshtimer interval="5"></refreshtimer>*@
+
+</body>
+
+</html>

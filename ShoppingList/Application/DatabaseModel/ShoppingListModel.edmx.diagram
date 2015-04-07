@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="78e3a256da044116b01df7b2bbafe7e8" Name="Diagram1">
+        <EntityTypeShape EntityType="ShoppingListModel.Item" Width="1.5" PointX="2.625" PointY="0.5" />
+        <EntityTypeShape EntityType="ShoppingListModel.ItemVendorXref" Width="1.5" PointX="4.625" PointY="0.5" />
+        <EntityTypeShape EntityType="ShoppingListModel.Picture" Width="1.5" PointX="0.5" PointY="0.5" />
+        <EntityTypeShape EntityType="ShoppingListModel.ShoppingEvent" Width="1.5" PointX="6.125" PointY="4.375" />
+        <EntityTypeShape EntityType="ShoppingListModel.ShoppingItem" Width="1.5" PointX="3.125" PointY="4.375" />
+        <EntityTypeShape EntityType="ShoppingListModel.Vendor" Width="1.5" PointX="6.5" PointY="0.625" />
+        <AssociationConnector Association="ShoppingListModel.FK_Item_ToPicture" />
+        <AssociationConnector Association="ShoppingListModel.FK_ItemVendorXref_ToItem" />
+        <AssociationConnector Association="ShoppingListModel.FK_ShoppingItem_ToItem" />
+        <AssociationConnector Association="ShoppingListModel.FK_ItemVendorXref_ToVendor" />
+        <AssociationConnector Association="ShoppingListModel.FK_ShoppingEvent_ToVendor" />
+        <AssociationConnector Association="ShoppingListModel.FK_ShoppingItem_ToShoppingEvent" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

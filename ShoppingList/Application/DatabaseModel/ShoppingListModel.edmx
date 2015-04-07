@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ShoppingListModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PictureId" Type="int" />
+        </EntityType>
+        <EntityType Name="ItemVendorXref">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="VendorId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Picture">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PictureContent" Type="varbinary(max)" />
+          <Property Name="Junk" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ShoppingEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VendorId" Type="int" />
+          <Property Name="ShoppingDate" Type="datetime" Nullable="false" />
+          <Property Name="DoneShopping" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShoppingItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="ShoppingEventId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="IsPurchased" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vendor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Item_ToPicture">
+          <End Role="Picture" Type="Self.Picture" Multiplicity="0..1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Picture">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="PictureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemVendorXref_ToItem">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="ItemVendorXref" Type="Self.ItemVendorXref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemVendorXref">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemVendorXref_ToVendor">
+          <End Role="Vendor" Type="Self.Vendor" Multiplicity="1" />
+          <End Role="ItemVendorXref" Type="Self.ItemVendorXref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemVendorXref">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShoppingEvent_ToVendor">
+          <End Role="Vendor" Type="Self.Vendor" Multiplicity="0..1" />
+          <End Role="ShoppingEvent" Type="Self.ShoppingEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShoppingEvent">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShoppingItem_ToItem">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="ShoppingItem" Type="Self.ShoppingItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShoppingItem">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShoppingItem_ToShoppingEvent">
+          <End Role="ShoppingEvent" Type="Self.ShoppingEvent" Multiplicity="1" />
+          <End Role="ShoppingItem" Type="Self.ShoppingItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShoppingEvent">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShoppingItem">
+              <PropertyRef Name="ShoppingEventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ShoppingListModelStoreContainer">
+          <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemVendorXref" EntityType="Self.ItemVendorXref" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Picture" EntityType="Self.Picture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShoppingEvent" EntityType="Self.ShoppingEvent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShoppingItem" EntityType="Self.ShoppingItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vendor" EntityType="Self.Vendor" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Item_ToPicture" Association="Self.FK_Item_ToPicture">
+            <End Role="Picture" EntitySet="Picture" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemVendorXref_ToItem" Association="Self.FK_ItemVendorXref_ToItem">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="ItemVendorXref" EntitySet="ItemVendorXref" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemVendorXref_ToVendor" Association="Self.FK_ItemVendorXref_ToVendor">
+            <End Role="Vendor" EntitySet="Vendor" />
+            <End Role="ItemVendorXref" EntitySet="ItemVendorXref" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShoppingEvent_ToVendor" Association="Self.FK_ShoppingEvent_ToVendor">
+            <End Role="Vendor" EntitySet="Vendor" />
+            <End Role="ShoppingEvent" EntitySet="ShoppingEvent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShoppingItem_ToItem" Association="Self.FK_ShoppingItem_ToItem">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="ShoppingItem" EntitySet="ShoppingItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShoppingItem_ToShoppingEvent" Association="Self.FK_ShoppingItem_ToShoppingEvent">
+            <End Role="ShoppingEvent" EntitySet="ShoppingEvent" />
+            <End Role="ShoppingItem" EntitySet="ShoppingItem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ShoppingListModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ShoppingListDbContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Item" EntityType="ShoppingListModel.Item" />
+          <EntitySet Name="ItemVendorXref" EntityType="ShoppingListModel.ItemVendorXref" />
+          <EntitySet Name="Picture" EntityType="ShoppingListModel.Picture" />
+          <EntitySet Name="ShoppingEvent" EntityType="ShoppingListModel.ShoppingEvent" />
+          <EntitySet Name="ShoppingItem" EntityType="ShoppingListModel.ShoppingItem" />
+          <EntitySet Name="Vendor" EntityType="ShoppingListModel.Vendor" />
+          <AssociationSet Name="FK_Item_ToPicture" Association="ShoppingListModel.FK_Item_ToPicture">
+            <End Role="Picture" EntitySet="Picture" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemVendorXref_ToItem" Association="ShoppingListModel.FK_ItemVendorXref_ToItem">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="ItemVendorXref" EntitySet="ItemVendorXref" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShoppingItem_ToItem" Association="ShoppingListModel.FK_ShoppingItem_ToItem">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="ShoppingItem" EntitySet="ShoppingItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemVendorXref_ToVendor" Association="ShoppingListModel.FK_ItemVendorXref_ToVendor">
+            <End Role="Vendor" EntitySet="Vendor" />
+            <End Role="ItemVendorXref" EntitySet="ItemVendorXref" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShoppingEvent_ToVendor" Association="ShoppingListModel.FK_ShoppingEvent_ToVendor">
+            <End Role="Vendor" EntitySet="Vendor" />
+            <End Role="ShoppingEvent" EntitySet="ShoppingEvent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShoppingItem_ToShoppingEvent" Association="ShoppingListModel.FK_ShoppingItem_ToShoppingEvent">
+            <End Role="ShoppingEvent" EntitySet="ShoppingEvent" />
+            <End Role="ShoppingItem" EntitySet="ShoppingItem" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PictureId" Type="Int32" />
+          <NavigationProperty Name="Picture" Relationship="ShoppingListModel.FK_Item_ToPicture" FromRole="Item" ToRole="Picture" />
+          <NavigationProperty Name="ItemVendorXref" Relationship="ShoppingListModel.FK_ItemVendorXref_ToItem" FromRole="Item" ToRole="ItemVendorXref" />
+          <NavigationProperty Name="ShoppingItem" Relationship="ShoppingListModel.FK_ShoppingItem_ToItem" FromRole="Item" ToRole="ShoppingItem" />
+        </EntityType>
+        <EntityType Name="ItemVendorXref">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="VendorId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="ShoppingListModel.FK_ItemVendorXref_ToItem" FromRole="ItemVendorXref" ToRole="Item" />
+          <NavigationProperty Name="Vendor" Relationship="ShoppingListModel.FK_ItemVendorXref_ToVendor" FromRole="ItemVendorXref" ToRole="Vendor" />
+        </EntityType>
+        <EntityType Name="Picture">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PictureContent" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Junk" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Item" Relationship="ShoppingListModel.FK_Item_ToPicture" FromRole="Picture" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="ShoppingEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VendorId" Type="Int32" />
+          <Property Name="ShoppingDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DoneShopping" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Vendor" Relationship="ShoppingListModel.FK_ShoppingEvent_ToVendor" FromRole="ShoppingEvent" ToRole="Vendor" />
+          <NavigationProperty Name="ShoppingItem" Relationship="ShoppingListModel.FK_ShoppingItem_ToShoppingEvent" FromRole="ShoppingEvent" ToRole="ShoppingItem" />
+        </EntityType>
+        <EntityType Name="ShoppingItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="ShoppingEventId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="IsPurchased" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="ShoppingListModel.FK_ShoppingItem_ToItem" FromRole="ShoppingItem" ToRole="Item" />
+          <NavigationProperty Name="ShoppingEvent" Relationship="ShoppingListModel.FK_ShoppingItem_ToShoppingEvent" FromRole="ShoppingItem" ToRole="ShoppingEvent" />
+        </EntityType>
+        <EntityType Name="Vendor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ItemVendorXref" Relationship="ShoppingListModel.FK_ItemVendorXref_ToVendor" FromRole="Vendor" ToRole="ItemVendorXref" />
+          <NavigationProperty Name="ShoppingEvent" Relationship="ShoppingListModel.FK_ShoppingEvent_ToVendor" FromRole="Vendor" ToRole="ShoppingEvent" />
+        </EntityType>
+        <Association Name="FK_Item_ToPicture">
+          <End Type="ShoppingListModel.Picture" Role="Picture" Multiplicity="0..1" />
+          <End Type="ShoppingListModel.Item" Role="Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Picture">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="PictureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemVendorXref_ToItem">
+          <End Type="ShoppingListModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="ShoppingListModel.ItemVendorXref" Role="ItemVendorXref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemVendorXref">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShoppingItem_ToItem">
+          <End Type="ShoppingListModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="ShoppingListModel.ShoppingItem" Role="ShoppingItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShoppingItem">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemVendorXref_ToVendor">
+          <End Type="ShoppingListModel.Vendor" Role="Vendor" Multiplicity="1" />
+          <End Type="ShoppingListModel.ItemVendorXref" Role="ItemVendorXref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemVendorXref">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShoppingEvent_ToVendor">
+          <End Type="ShoppingListModel.Vendor" Role="Vendor" Multiplicity="0..1" />
+          <End Type="ShoppingListModel.ShoppingEvent" Role="ShoppingEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShoppingEvent">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShoppingItem_ToShoppingEvent">
+          <End Type="ShoppingListModel.ShoppingEvent" Role="ShoppingEvent" Multiplicity="1" />
+          <End Type="ShoppingListModel.ShoppingItem" Role="ShoppingItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShoppingEvent">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShoppingItem">
+              <PropertyRef Name="ShoppingEventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ShoppingListModelStoreContainer" CdmEntityContainer="ShoppingListDbContext">
+          <EntitySetMapping Name="Item">
+            <EntityTypeMapping TypeName="ShoppingListModel.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemVendorXref">
+            <EntityTypeMapping TypeName="ShoppingListModel.ItemVendorXref">
+              <MappingFragment StoreEntitySet="ItemVendorXref">
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Picture">
+            <EntityTypeMapping TypeName="ShoppingListModel.Picture">
+              <MappingFragment StoreEntitySet="Picture">
+                <ScalarProperty Name="Junk" ColumnName="Junk" />
+                <ScalarProperty Name="PictureContent" ColumnName="PictureContent" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShoppingEvent">
+            <EntityTypeMapping TypeName="ShoppingListModel.ShoppingEvent">
+              <MappingFragment StoreEntitySet="ShoppingEvent">
+                <ScalarProperty Name="DoneShopping" ColumnName="DoneShopping" />
+                <ScalarProperty Name="ShoppingDate" ColumnName="ShoppingDate" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShoppingItem">
+            <EntityTypeMapping TypeName="ShoppingListModel.ShoppingItem">
+              <MappingFragment StoreEntitySet="ShoppingItem">
+                <ScalarProperty Name="IsPurchased" ColumnName="IsPurchased" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ShoppingEventId" ColumnName="ShoppingEventId" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vendor">
+            <EntityTypeMapping TypeName="ShoppingListModel.Vendor">
+              <MappingFragment StoreEntitySet="Vendor">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html ng-app="ShoppingEventPageApp">
+
+<head>
+  <title>List</title>
+  <script src="/scripts/jquery-1.10.2.min.js"></script>
+  <script src="/scripts/bootstrap.js"></script>
+  <script type="text/css" src="/content/bootstrap.css" content-type="text/css">
+  </script>
+  <script src="/scripts/bootstrap-filestyle.min.js"></script>
+  <script src="/scripts/angular.js"></script>
+  <script src="/scripts/angular-file-upload.js"></script>
+  <script src="/Scripts/timer.js"></script>
+  <script src="/areas/Shared/Models/PictureAJAX.js"></script>
+  <script src="/areas/Shared/Models/Picture.js"></script>
+  <script src="/areas/Shared/Models/ShoppingItemAJAX.js"></script>
+  <script src="/areas/Shared/Models/ShoppingItem.js"></script>
+  <script src="/areas/Shared/Models/ShoppingItemList.js"></script>
+  <script src="/areas/ShoppingEventPage/ShoppingEventPageApp.js"></script>
+</head>
+
+<body ng-controller="ShoppingEventPageController">
+
+  <div>
+    <h3> </h3>
+  </div>
+
+  <div class="form-inline">
+    <div class="form-group">
+      <input class="form-control" ng-model="newItemName" ng-keypress="newItemKeyPress($event)" placeholder="What do you need?" />
+    </div>
+    <div class="form-group">
+      <button class="btn btn-default" ng-click="newitemButtonClick()">Add</button>
+    </div>
+  </div>
+
+  <div>
+    <h3> </h3>
+  </div>
+
+  <div class="form-inline">
+    <div ng-repeat="shoppingItem in shoppingItemList">
+      <div class="form-group">
+        <input type="checkbox" ng-model="shoppingItem.isPurchased" ng-click="shoppingItemCheckboxClick(shoppingItem)" />
+      </div>
+      <div class="form-group">
+        <input class="form-control" ng-model="shoppingItem.name" ng-disabled="shoppingItemDisabled(shoppingItem)" />
+      </div>
+      <div class="form-group" ng-show="shoppingItemAddPictureVisible(shoppingItem)">
+        <label for="file-selection" ng-click="addPictureClick(shoppingItem)"><img src="/glyphicons/glyphicons-12-camera-light.png" /></label>
+        <input id="file-selection" type="file" file-model="fileModel" ng-hide="true" />
+        @*<input id="file-selection" type="file" class="filestyle" data-classbutton="btn btn-primary" data-input="false" data-buttontext="+Pic" file-model="selectedFile" style="display: none;" />*@
+      </div>
+      <div class="form-group" ng-show="shoppingItemShowPictureVisible(shoppingItem)">
+        <label ng-click="shoppingItemShowPicture(shoppingItem)"><img src="/glyphicons/glyphicons-139-picture.png"/></label>
+      </div>
+    </div>
+  </div>
+
+  @*<refreshtimer interval="5"></refreshtimer>*@
+
+</body>
+
+</html>
