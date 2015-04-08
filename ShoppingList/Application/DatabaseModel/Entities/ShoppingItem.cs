@@ -38,7 +38,7 @@ namespace ShoppingList.Application.DatabaseModel
             ShoppingEvent = shoppingItem.ShoppingEvent;
         }
 
-        public ShoppingItem AddUpdateItem(ShoppingItem shoppingItem, IShoppingItemStorage shoppingItemStorage)
+        public ShoppingItem AddUpdateItem(ShoppingItem shoppingItem, IStorage<ShoppingItem> storage)
         {
             if (shoppingItem == null)
             {
@@ -57,14 +57,14 @@ namespace ShoppingList.Application.DatabaseModel
 
             Validate();
 
-            var updatedItem = Id == 0 ? shoppingItemStorage.Add(this) : shoppingItemStorage.Update(this);
+            var updatedItem = Id == 0 ? storage.Add(this) : storage.Update(this);
 
             return updatedItem;
         }
 
-        public bool DeleteItem(int shoppingItemId, IShoppingItemStorage shoppingItemStorage)
+        public bool DeleteItem(int shoppingItemId, IStorage<ShoppingItem> storage)
         {
-            return shoppingItemStorage.Delete(shoppingItemId);
+            return storage.Delete(shoppingItemId);
         }
 
         public void Validate()

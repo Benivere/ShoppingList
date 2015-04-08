@@ -175,7 +175,10 @@
     <Compile Include="Application\Api\CommandHandlers\PictureTransitionHandler.cs" />
     <Compile Include="Application\Api\CommandHandlers\ItemTransitionHandler.cs" />
     <Compile Include="Application\Api\CommandHandlers\ShoppingItemTransitionHandler.cs" />
-    <Compile Include="Application\Api\Interfaces\IShoppingItemStorage.cs" />
+    <Compile Include="Application\Api\Interfaces\IEntity.cs" />
+    <Compile Include="Application\Api\Interfaces\IValidate.cs" />
+    <Compile Include="Application\Api\Interfaces\IStorage.cs" />
+    <Compile Include="Application\Api\Interfaces\SqlDatabase.cs" />
     <Compile Include="Application\Api\Sql\PictureSqlDatabase.cs" />
     <Compile Include="Application\Api\Sql\ItemSqlDatabase.cs" />
     <Compile Include="Application\Api\Sql\ShoppingEventSqlDatabase.cs" />

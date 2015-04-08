@@ -7,14 +7,22 @@ namespace ShoppingList.Application.Api.CommandHandlers
     {
         public Item AddUpdate(Item item)
         {
-            var itemToUpdate = new ItemSqlDatabase(item);
-            var success = itemToUpdate.AddUpdateItem(item);
-            return success ? itemToUpdate : null;
+            var dbContext = new ShoppingListDbContext();
+
+            var itemSqlDatabase = new ItemSqlStorage(dbContext);
+
+            var itemToUpdate = itemSqlDatabase.GetById(item.Id);
+            itemToUpdate.AddUpdateItem(item, itemSqlDatabase);
+            return itemToUpdate;
         }
 
         public bool Delete(int itemId)
         {
-            return new Item().DeleteItem(itemId);
+            var dbContext = new ShoppingListDbContext();
+
+            var itemSqlDatabase = new ItemSqlStorage(dbContext);
+
+            return new Item().DeleteItem(itemId, itemSqlDatabase);
         }
     }
 }

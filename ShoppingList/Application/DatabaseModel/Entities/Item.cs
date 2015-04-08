@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using ShoppingList.Application.Api.Interfaces;
 using ShoppingList.Application.Common;
 
 namespace ShoppingList.Application.DatabaseModel
 {
-    public partial class Item
+    public partial class Item : IValidate, IEntity
     {
         public Item(Item item)
         {
@@ -29,27 +30,27 @@ namespace ShoppingList.Application.DatabaseModel
             PictureId = item.PictureId;
         }
 
-        public bool AddUpdateItem(Item item)
+        public Item AddUpdateItem(Item item, IStorage<Item> storage)
         {
-            if (item == null)
+            if (storage == null)
             {
-                return false;
+                return null;
             }
 
             CopyProperties(item);
             Validate();
 
-            var success = Id == 0 ? Add() : Update();
+            var updatedItem = Id == 0 ? storage.Add(this) : storage.Update(this);
 
-            return success;
+            return updatedItem;
         }
 
-        public bool DeleteItem(int itemId)
+        public bool DeleteItem(int itemId, IStorage<Item> storage)
         {
-            return Delete(itemId);
+            return storage.Delete(itemId);
         }
 
-        protected void Validate()
+        public void Validate()
         {
             // ReSharper disable once UseObjectOrCollectionInitializer
             var verifications = new List<Verify>();
@@ -58,21 +59,6 @@ namespace ShoppingList.Application.DatabaseModel
             verifications.Add(new Verify(Name != null && Name.Trim() != "").OnFailureShowMessage("Name cannot be empty."));
 
             Verify.These(verifications);
-        }
-
-        protected virtual bool Add()
-        {
-            return true;
-        }
-
-        protected virtual bool Update()
-        {
-            return true;
-        }
-
-        protected virtual bool Delete(int itemId)
-        {
-            return true;
         }
     }
 }

@@ -7,7 +7,9 @@ namespace ShoppingList.Application.Api.CommandHandlers
     {
         public ShoppingItem AddUpdate(ShoppingItem shoppingItem)
         {
-            var shoppingItemSqlDatabase = new ShoppingItemSqlDatabase();
+            var dbContext = new ShoppingListDbContext();
+
+            var shoppingItemSqlDatabase = new ShoppingItemDatabase(dbContext);
 
             var itemToUpdate = shoppingItemSqlDatabase.GetById(shoppingItem.Id);
             itemToUpdate.AddUpdateItem(shoppingItem, shoppingItemSqlDatabase);
@@ -16,7 +18,9 @@ namespace ShoppingList.Application.Api.CommandHandlers
 
         public bool Delete(int shoppingItemId)
         {
-            var shoppingItemSqlDatabase = new ShoppingItemSqlDatabase();
+            var dbContext = new ShoppingListDbContext();
+
+            var shoppingItemSqlDatabase = new ShoppingItemDatabase(dbContext);
 
             return new ShoppingItem().DeleteItem(shoppingItemId, shoppingItemSqlDatabase);
         }
