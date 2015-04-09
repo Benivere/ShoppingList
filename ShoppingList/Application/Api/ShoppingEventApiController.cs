@@ -4,7 +4,6 @@ using ShoppingList.Application.Api.CommandHandlers;
 using ShoppingList.Application.Api.Sql;
 using ShoppingList.Application.Api.ViewModels;
 using ShoppingList.Application.DatabaseModel;
-using ShoppingList.Application.Entities;
 
 namespace ShoppingList.Application.Api
 {
@@ -21,7 +20,7 @@ namespace ShoppingList.Application.Api
         [HttpGet]
         public ShoppingEvent GetById(int id)
         {
-            return new ShoppingEventSqlQueries().GetById(id);
+            return new ShoppingEventSqlQueries().GetByEventId(id);
         }
 
         //public void Post([FromBody]ShoppingList shoppingDate)

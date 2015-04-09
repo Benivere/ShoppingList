@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
+using ShoppingList.Application.Api.Interfaces;
 using ShoppingList.Application.Common;
 
 namespace ShoppingList.Application.DatabaseModel
 {
-    public partial class Picture
+    public partial class Picture : IValidate, IEntity
     {
         public Picture(Picture picture)
         {
@@ -30,7 +29,7 @@ namespace ShoppingList.Application.DatabaseModel
             PictureContent = picture.PictureContent;
         }
 
-        public bool AddUpdateItem(Picture picture)
+        public Picture AddUpdateItem(Picture picture, IStorage<Picture> storage)
         {
             if (picture == null)
             {
@@ -40,17 +39,17 @@ namespace ShoppingList.Application.DatabaseModel
             CopyProperties(picture);
             Validate();
 
-            var success = Id == 0 ? Add() : Update();
+            var updatedItem = Id == 0 ? storage.Add(this) : storage.Update(this);
 
-            return success;
+            return updatedItem;
         }
 
-        public bool DeleteItem(int pictureId)
+        public bool DeleteItem(int pictureId, IStorage<Picture> storage)
         {
-            return Delete(pictureId);
+            return storage.Delete(pictureId);
         }
 
-        protected void Validate()
+        public void Validate()
         {
             // ReSharper disable once UseObjectOrCollectionInitializer
             var verifications = new List<Verify>();
@@ -63,21 +62,6 @@ namespace ShoppingList.Application.DatabaseModel
                                   .OnFailureShowMessage("The image does not appear to be a valid JPG file."));
 
             Verify.These(verifications);
-        }
-
-        protected virtual bool Add()
-        {
-            return true;
-        }
-
-        protected virtual bool Update()
-        {
-            return true;
-        }
-
-        protected virtual bool Delete(int pictureId)
-        {
-            return true;
         }
     }
 }

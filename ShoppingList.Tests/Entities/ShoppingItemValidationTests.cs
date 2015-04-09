@@ -3,7 +3,6 @@ using FluentAssertions;
 using NUnit.Framework;
 using ShoppingList.Application.Common;
 using ShoppingList.Application.DatabaseModel;
-using ShoppingList.Application.Entities;
 
 // ReSharper disable ObjectCreationAsStatement
 

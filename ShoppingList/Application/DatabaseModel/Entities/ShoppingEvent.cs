@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using ShoppingList.Application.Api.Interfaces;
 using ShoppingList.Application.Common;
-using ShoppingList.Application.DatabaseModel;
 
-namespace ShoppingList.Application.Entities
+namespace ShoppingList.Application.DatabaseModel
 {
-    public class ShoppingEventEntity : ShoppingEvent
+    public partial class ShoppingEvent : IValidate, IEntity
     {
-        public ShoppingEventEntity()
-        {
-        }
-
-        public ShoppingEventEntity(ShoppingEvent shoppingEvent)
+        public ShoppingEvent(ShoppingEvent shoppingEvent)
         {
             if (shoppingEvent == null)
             {
@@ -35,19 +30,24 @@ namespace ShoppingList.Application.Entities
             DoneShopping = shoppingEvent.DoneShopping;
         }
 
-        public bool AddUpdateItem(ShoppingEvent item)
+        public ShoppingEvent AddUpdateItem(ShoppingEvent shoppingEvent, IStorage<ShoppingEvent> storage)
         {
-            CopyProperties(item);
+            if (shoppingEvent == null)
+            {
+                return null;
+            }
+
+            CopyProperties(shoppingEvent);
             Validate();
 
-            var returnItem = Id == 0 ? Add() : Update();
+            var updatedItem = Id == 0 ? storage.Add(this) : storage.Update(this);
 
-            return returnItem;
+            return updatedItem;
         }
 
-        public bool DeleteItem(int shoppingEventId)
+        public bool DeleteItem(int shoppingEventId, IStorage<ShoppingEvent> storage)
         {
-            return Delete(shoppingEventId);
+            return storage.Delete(shoppingEventId);
         }
 
         public void Validate()
@@ -58,21 +58,6 @@ namespace ShoppingList.Application.Entities
             verifications.Add(new Verify(Id >= 0).OnFailureShowMessage("Id value is out of range (0 = Add, >0 = Update)."));
 
             Verify.These(verifications);
-        }
-
-        protected virtual bool Add()
-        {
-            return true;
-        }
-
-        protected virtual bool Update()
-        {
-            return true;
-        }
-
-        protected virtual bool Delete(int id)
-        {
-            return true;
         }
     }
 }

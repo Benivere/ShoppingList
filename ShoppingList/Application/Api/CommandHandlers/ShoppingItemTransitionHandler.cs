@@ -9,10 +9,10 @@ namespace ShoppingList.Application.Api.CommandHandlers
         {
             var dbContext = new ShoppingListDbContext();
 
-            var shoppingItemSqlDatabase = new ShoppingItemSqlStorage(dbContext);
+            var shoppingItemSqlStorage = new ShoppingItemSqlStorage(dbContext);
 
-            var itemToUpdate = shoppingItemSqlDatabase.GetById(shoppingItem.Id);
-            itemToUpdate.AddUpdateItem(shoppingItem, shoppingItemSqlDatabase);
+            var itemToUpdate = shoppingItemSqlStorage.GetById(shoppingItem.Id);
+            itemToUpdate.AddUpdateItem(shoppingItem, shoppingItemSqlStorage);
             return itemToUpdate;
         }
 
@@ -20,9 +20,9 @@ namespace ShoppingList.Application.Api.CommandHandlers
         {
             var dbContext = new ShoppingListDbContext();
 
-            var shoppingItemSqlDatabase = new ShoppingItemSqlStorage(dbContext);
+            var shoppingItemSqlStorage = new ShoppingItemSqlStorage(dbContext);
 
-            return new ShoppingItem().DeleteItem(shoppingItemId, shoppingItemSqlDatabase);
+            return new ShoppingItem().DeleteItem(shoppingItemId, shoppingItemSqlStorage);
         }
     }
 }

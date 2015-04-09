@@ -179,9 +179,9 @@
     <Compile Include="Application\Api\Interfaces\IValidate.cs" />
     <Compile Include="Application\Api\Interfaces\IStorage.cs" />
     <Compile Include="Application\Api\Interfaces\SqlStorage.cs" />
-    <Compile Include="Application\Api\Sql\PictureSqlDatabase.cs" />
+    <Compile Include="Application\Api\Sql\PictureSqlStorage.cs" />
     <Compile Include="Application\Api\Sql\ItemSqlStorage.cs" />
-    <Compile Include="Application\Api\Sql\ShoppingEventSqlDatabase.cs" />
+    <Compile Include="Application\Api\Sql\ShoppingEventSqlStorage.cs" />
     <Compile Include="Application\Api\Sql\ItemSqlQueries.cs" />
     <Compile Include="Application\Common\FileUploadHandler.ashx.cs">
       <DependentUpon>FileUploadHandler.ashx</DependentUpon>
@@ -224,10 +224,10 @@
       <DependentUpon>ShoppingListModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Application\DatabaseModel\Entities\Picture.cs" />
-    <Compile Include="Application\Entities\ShoppingEventEntity.cs" />
+    <Compile Include="Application\DatabaseModel\Entities\ShoppingEvent.cs" />
     <Compile Include="Application\Api\Sql\ShoppingEventSqlQueries.cs" />
     <Compile Include="Application\Api\Sql\PictureSqlQueries.cs" />
-    <Compile Include="Application\Api\Sql\ShoppingItemSqlDatabase.cs" />
+    <Compile Include="Application\Api\Sql\ShoppingItemSqlStorage.cs" />
     <Compile Include="Application\DatabaseModel\Entities\ShoppingItem.cs" />
     <Compile Include="Application\Api\Sql\ShoppingItemSqlQueries.cs" />
     <Compile Include="Application\Extensions\ItemExtension.cs" />

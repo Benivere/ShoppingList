@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using ShoppingList.Application.Api.Sql;
-using ShoppingList.Application.Entities;
 
 namespace ShoppingList.Tests.Queries
 {

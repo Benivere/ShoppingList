@@ -5,7 +5,6 @@ using ShoppingList.Application.Api.CommandHandlers;
 using ShoppingList.Application.Api.Sql;
 using ShoppingList.Application.Api.ViewModels;
 using ShoppingList.Application.DatabaseModel;
-using ShoppingList.Application.Entities;
 
 namespace ShoppingList.Application.Api
 {
@@ -31,7 +30,7 @@ namespace ShoppingList.Application.Api
             {
                 Id = shoppingItemViewModel.Id,
                 IsPurchased = shoppingItemViewModel.IsPurchased,
-                ShoppingEventId = shoppingItemViewModel.ShoppingEventId
+                Quantity = shoppingItemViewModel.Quantity
             };
 
             var updatedShoppingItem = new ShoppingItemTransitionHandler().AddUpdate(shoppingItem);

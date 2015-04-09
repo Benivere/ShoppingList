@@ -16,6 +16,7 @@ namespace ShoppingList.Application.Api.ViewModels
             IsPurchased = shoppingItem.IsPurchased;
             ShoppingEventId = shoppingItem.ShoppingEventId;
             PictureId = shoppingItem.Item.PictureId;
+            Quantity = shoppingItem.Quantity;
         }
 
         public int Id { get; set; }
@@ -23,5 +24,6 @@ namespace ShoppingList.Application.Api.ViewModels
         public bool IsPurchased { get; set; }
         public int ShoppingEventId { get; set; }
         public int? PictureId { get; set; }
+        public int Quantity { get; set; }
     }
 }

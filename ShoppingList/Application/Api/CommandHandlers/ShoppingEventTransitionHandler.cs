@@ -1,6 +1,5 @@
 ﻿using ShoppingList.Application.Api.Sql;
 using ShoppingList.Application.DatabaseModel;
-using ShoppingList.Application.Entities;
 
 namespace ShoppingList.Application.Api.CommandHandlers
 {
@@ -8,14 +7,22 @@ namespace ShoppingList.Application.Api.CommandHandlers
     {
         public ShoppingEvent AddUpdate(ShoppingEvent shoppingEvent)
         {
-            var shoppingEventToUpdate = new ShoppingEventSqlDatabase(shoppingEvent);
-            var success = shoppingEventToUpdate.AddUpdateItem(shoppingEvent);
-            return success ? shoppingEventToUpdate : null;
+            var dbContext = new ShoppingListDbContext();
+
+            var shoppingEventSqlStorage = new ShoppingEventSqlStorage(dbContext);
+
+            var itemToUpdate = shoppingEventSqlStorage.GetById(shoppingEvent.Id);
+            itemToUpdate.AddUpdateItem(shoppingEvent, shoppingEventSqlStorage);
+            return itemToUpdate;
         }
 
         public bool Delete(int shoppingEventId)
         {
-            return new ShoppingEventEntity().DeleteItem(shoppingEventId);
+            var dbContext = new ShoppingListDbContext();
+
+            var shoppingEventSqlStorage = new ShoppingEventSqlStorage(dbContext);
+
+            return new ShoppingEvent().DeleteItem(shoppingEventId, shoppingEventSqlStorage);
         }
     }
 }
