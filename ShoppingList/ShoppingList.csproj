@@ -176,6 +176,7 @@
     <Compile Include="Application\Api\CommandHandlers\ItemTransitionHandler.cs" />
     <Compile Include="Application\Api\CommandHandlers\ShoppingItemTransitionHandler.cs" />
     <Compile Include="Application\Api\Interfaces\IEntity.cs" />
+    <Compile Include="Application\Api\Interfaces\IUpdate.cs" />
     <Compile Include="Application\Api\Interfaces\IValidate.cs" />
     <Compile Include="Application\Api\Interfaces\IStorage.cs" />
     <Compile Include="Application\Api\Interfaces\SqlStorage.cs" />

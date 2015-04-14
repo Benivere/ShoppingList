@@ -5,7 +5,7 @@ using ShoppingList.Application.Common;
 
 namespace ShoppingList.Application.DatabaseModel
 {
-    public partial class Item : IValidate, IEntity
+    public partial class Item : IValidate, IEntity, IUpdate<Item>
     {
         public Item(Item item)
         {

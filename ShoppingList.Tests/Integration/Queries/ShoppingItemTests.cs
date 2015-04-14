@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using ShoppingList.Application.Api.Sql;
 
-namespace ShoppingList.Tests.Queries
+namespace ShoppingList.Tests.Integration.Queries
 {
     [TestFixture]
     public class ShoppingItemTests

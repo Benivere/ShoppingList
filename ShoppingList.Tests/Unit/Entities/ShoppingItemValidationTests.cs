@@ -6,7 +6,7 @@ using ShoppingList.Application.DatabaseModel;
 
 // ReSharper disable ObjectCreationAsStatement
 
-namespace ShoppingList.Tests.Entities
+namespace ShoppingList.Tests.Unit.Entities
 {
     [TestFixture]
     public class ShoppingItemValidationTests

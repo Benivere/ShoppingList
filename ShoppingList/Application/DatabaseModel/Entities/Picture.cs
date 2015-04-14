@@ -5,7 +5,7 @@ using ShoppingList.Application.Common;
 
 namespace ShoppingList.Application.DatabaseModel
 {
-    public partial class Picture : IValidate, IEntity
+    public partial class Picture : IValidate, IEntity, IUpdate<Picture>
     {
         public Picture(Picture picture)
         {

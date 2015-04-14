@@ -5,7 +5,7 @@ using ShoppingList.Application.Common;
 
 namespace ShoppingList.Application.DatabaseModel
 {
-    public partial class ShoppingItem : IValidate, IEntity
+    public partial class ShoppingItem : IValidate, IEntity, IUpdate<ShoppingItem>
     {
         public ShoppingItem()
         {
@@ -74,11 +74,8 @@ namespace ShoppingList.Application.DatabaseModel
 
             verifications.Add(new Verify(Id >= 0).OnFailureShowMessage("Id value is out of range (0 = Add, >0 = Update)."));
 
-            if (Id > 0)
-            {
-                verifications.Add(new Verify(ItemId > 0).OnFailureShowMessage("ItemId is not a valid reference."));
-                verifications.Add(new Verify(ShoppingEventId > 0).OnFailureShowMessage("ShoppingEventId is not a valid reference."));
-            }
+            verifications.Add(new Verify(ItemId > 0).OnFailureShowMessage("ItemId is not a valid reference."));
+            verifications.Add(new Verify(ShoppingEventId > 0).OnFailureShowMessage("ShoppingEventId is not a valid reference."));
 
             Verify.These(verifications);
         }

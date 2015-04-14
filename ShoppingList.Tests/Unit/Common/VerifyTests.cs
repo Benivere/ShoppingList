@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using ShoppingList.Application.Common;
 
-namespace ShoppingList.Tests.Common
+namespace ShoppingList.Tests.Unit.Common
 {
     [TestClass]
     public class VerifyTests

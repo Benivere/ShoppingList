@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace ShoppingList.Application.Api.Interfaces
+﻿namespace ShoppingList.Application.Api.Interfaces
 {
     public interface IEntity
     {
